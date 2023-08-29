@@ -5,7 +5,7 @@ const options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Music Metadata API',
+      title: 'LTI Mindtree Music API',
       version: '1.0.0',
     },
     paths: {
@@ -18,7 +18,7 @@ const options = {
                   schema: {
                     type: 'object',
                     properties: {
-                      ISRC: {
+                      isrc: {
                         type: 'string',
                         description: 'The ISRC of the track'
                       }
@@ -40,6 +40,9 @@ const options = {
               },
               '400': {
                 description: 'Bad request'
+              },
+              '409': {
+                description: 'Track already exists'
               },
               '500': {
                 description: 'Internal server error'
@@ -132,13 +135,51 @@ const options = {
                 type: 'string',
                 description: 'The title of the track'
               },
-              artist: {
-                type: 'string',
-                description: 'List of artist names'
+              Artists: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'integer',
+                      description: 'The ID of the artist'
+                    },
+                    name: {
+                      type: 'string',
+                      description: 'The name of the artist'
+                    },
+                    TrackIsrc: {
+                      type: 'string',
+                      description: 'The ISRC of the track associated with the artist'
+                    },
+                    updatedAt: {
+                      type: 'string',
+                      format: 'date-time',
+                      description: 'The timestamp when the record was updated'
+                    },
+                    createdAt: {
+                      type: 'string',
+                      format: 'date-time',
+                      description: 'The timestamp when the record was created'
+                    }
+                  }
+                },
+                description: 'List of artists associated with the track'
               },
-              imageURI: {
+              spotifyImageURI: {
                 type: 'string',
-                description: "The URI of the track's image"
+                format: 'uri',
+                description: "The URI of the track's album's Spotify image"
+              },
+              updatedAt: {
+                type: 'string',
+                format: 'date-time',
+                description: 'The timestamp when the record was updated'
+              },
+              createdAt: {
+                type: 'string',
+                format: 'date-time',
+                description: 'The timestamp when the record was created'
               }
             }
           }
